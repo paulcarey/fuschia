@@ -4,7 +4,7 @@ Fuschia is a graphical document browser for CouchDB. It's built on prefuse and F
 
 h3. Using
 
-Clone this repo, set @DB_NAME@ in @upload_binaries.sh@ to your target database and run @./upload_binaries.sh@. This will create a design document named fuschia containing views that, for a given document, retrieve all documents that it points to, and all documents that point to it.
+Clone this repo @git clone git@github.com:paulcarey/fuschia.git@, then run @./upload_binaries.sh $your_db_name@. This will create a design document named fuschia containing views that, for a given document, retrieve all documents that it points to, and all documents that point to it.
 
 Now direct your browser at "http://localhost:5984/*mydb*/_design/fuschia/Fuschia.html":http://localhost:5984/mydb/_design/fuschia/Fuschia.html, enter a full database uri (e.g. @http://localhost:5984/mydb@), seed document id and click load. You should be able to browse through your database.
 
