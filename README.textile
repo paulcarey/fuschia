@@ -1,18 +1,19 @@
 h3. Overview
 
-Fuschia is a graphical document browser for CouchDB. It's built on prefuse and Flex.
+Fuschia is a graphical document browser for CouchDB. It's built on prefuse and Flex. "Screenshot":http://github.com/paulcarey/fuschia/tree/master/example/fuschia.png.
 
 h3. Using
 
 Clone this repo, set @DB_NAME@ in @upload_binaries.sh@ to your target database and run @./upload_binaries.sh@. This will create a design document named fuschia containing views that, for a given document, retrieve all documents that it points to, and all documents that point to it.
 
-Now direct your browser at http://localhost:5984/mydb/_design/fuschia/Fuschia.html, enter a full database uri (e.g. http://localhost:5984/mydb), seed document id and click load. You should be able to browse through your database.
+Now direct your browser at "http://localhost:5984/*mydb*/_design/fuschia/Fuschia.html":http://localhost:5984/mydb/_design/fuschia/Fuschia.html, enter a full database uri (e.g. @http://localhost:5984/mydb@), seed document id and click load. You should be able to browse through your database.
 
-Fushica is at its best when it colors document nodes and displays document summaries. To have this happen, create a document at @mydb/fuschia@ based on the following example. You can upload it easily with curl, for example, @curl -T fuschia.json localhost:5984/mydb/fuschia@.
+Fushica is at its best when it colors document nodes and displays document summaries. To have this happen, create a document at @/mydb/fuschia@ based on the following example. You can upload it easily with curl, for example, @curl -T fuschia.json localhost:5984/mydb/fuschia@.
 
 <pre>
 <code>
-// classProperty is used to distinguish doc types. So for RelaxDB this would be 'class', for CouchRest::Model, 'couchrest-type'.
+// classProperty is used to distinguish doc types. 
+//  For RelaxDB this would be 'class', for CouchRest::Model, 'couchrest-type' etc.
 // fillColor represents the document node color. The first two characters specify an alpha value.
 // summaryProperty should specify the most descriptive property of the document.
 {
