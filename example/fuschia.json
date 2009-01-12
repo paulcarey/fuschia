@@ -1,0 +1,16 @@
+{
+  "_id" : "fuschia",
+  "classProperty" : "class",
+  "User" : {
+    "fillColor" : "0xff3355cc",
+    "summaryProperty" : "name"
+  },
+  "Post" : {
+    "fillColor" : "0xffcc5533",
+    "summaryProperty" : "contents"
+  },
+  "Comment" : {
+    "fillColor" : "0xff33cc55",
+    "summaryProperty" : "contents"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "_id":"_design/fuschia",
+  "views":{
+    "to_doc":{
+      "map":"function (doc) {\n  var isDocId = function (str) {\n    var res = /[0-9a-f-]+/(str);\n    return res && str.length >= 32 && str === res[0];\n  };\n  \n  for(var n in doc) {\n    var att = doc[n];\n    if (n !== \"_id\" && isDocId(att)) {\n      emit(att, null);\n    }\n  }\n}\n\n"
+    },
+    "from_doc":{
+      "map":"function (doc) {\n  var isDocId = function (str) {\n    var res = /[0-9a-f-]+/(str);\n    return res && str.length >= 32 && str === res[0];\n  };\n  \n  for(var n in doc) {\n    var att = doc[n];\n    if (n !== \"_id\" && isDocId(att)) {\n      emit(doc._id, att);\n    }\n  }\n}\n"
+    }
+  }
+}
