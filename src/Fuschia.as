@@ -18,6 +18,7 @@ package {
     
     import flash.display.Sprite;
     import flash.events.Event;
+    import flash.events.IOErrorEvent;
     import flash.events.MouseEvent;
     import flash.net.URLLoader;
     import flash.net.URLLoaderDataFormat;
@@ -34,7 +35,7 @@ package {
 	{
 		private var dbUri:String;
 		
-		private var metaData:Object;
+		private var metaData:Object = new Object();
 		
 		private var nodeMap:Dictionary = new Dictionary();
 		private var edgeMap:Dictionary = new Dictionary();		
@@ -171,7 +172,7 @@ package {
 			dbNameField.width = 100;
 			dbNameField.border = true;
 			dbNameField.defaultTextFormat = new TextFormat("Helvetica", 12);
-			dbNameField.text = "db name";
+			dbNameField.text = "db uri";
 			return dbNameField;	
 		}
 		
@@ -217,8 +218,12 @@ package {
 		private function loadMetaData(docId:String):void
 		{
 			var metaDataUri:String = dbUri + "fuschia";
-			loadData(metaDataUri, function (doc:Object):void {
+			loadData(metaDataUri, 
+			function (doc:Object):void {
 				metaData = doc;
+				loadDataForDoc(docId);
+			},
+			function ():void {
 				loadDataForDoc(docId);
 			});
 		}
@@ -289,7 +294,7 @@ package {
 			loadData(toDocUri, displayInDocs);
 		}
 		
-		private function loadData(uri:String, func:Function):void
+		private function loadData(uri:String, func:Function, errorFunc:Function = null):void
 		{
 			var loader:URLLoader = new URLLoader();
 			loader.dataFormat = URLLoaderDataFormat.BINARY;
@@ -299,6 +304,12 @@ package {
 					var text:String = input.readUTFBytes(input.bytesAvailable);
 					var data:Object = JSON.decode(text) as Object;
 					func(data);
+				}
+			);
+			loader.addEventListener(IOErrorEvent.IO_ERROR, 
+				function(evt:Event):void {
+					evt.preventDefault();
+					errorFunc();
 				}
 			);
 			loader.load(new URLRequest(uri));
