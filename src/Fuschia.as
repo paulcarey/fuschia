@@ -272,14 +272,14 @@ package {
 		private function displayInDocs(result:Object):void
 		{
 			for each (var r:Object in result.rows) {
-				var es:EdgeSprite = getEdgeSprite(r.id, r.key);
+				getEdgeSprite(r.id, r.key);
 			}
 		}
 		
 		private function displayOutDocs(result:Object):void
 		{
 			for each (var r:Object in result.rows) {
-				var es:EdgeSprite = getEdgeSprite(r.key, r.value);
+				getEdgeSprite(r.key, r.value);
 			}
 		}
 		
@@ -336,7 +336,14 @@ package {
 			trace("getEdge: " + edgeId);
 			
 			var es:EdgeSprite = edgeMap[edgeId];
-			if (es == null) {
+			var otherEs:EdgeSprite = edgeMap[otherEdgeId];
+			
+			if (otherEs != null) {
+				// We can't show bidirectional arrows so display 
+				// bidirectional relations by removing the arrow
+				otherEs.arrowType = ArrowType.NONE;
+				return otherEs;
+			} else if (es == null) {
 				trace("adding edge: " + edgeId);
 				var source:NodeSprite = getNodeSprite(source_id);
 				var target:NodeSprite = getNodeSprite(target_id);
@@ -344,18 +351,10 @@ package {
 				es.arrowType = ArrowType.TRIANGLE;
 				es.arrowWidth = 15;				
 				edgeMap[edgeId] = es;
+				return es;
+			} else {
+				return es;
 			}
-			
-			// Remove the other edge as a workaround for apparently ineffectual
-			// sort orders - defining a z-index and sorting on it only has the
-			// desired effect on the first draw
-			var otherEs:EdgeSprite = edgeMap[otherEdgeId];
-			if (otherEs != null) {
-				trace("removing edge: " + otherEdgeId);
-				data.removeEdge(otherEs);	
-				delete edgeMap[otherEdgeId];
-			}
-			return es;
 		}		
 		
 	}

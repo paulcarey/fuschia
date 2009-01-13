@@ -44,9 +44,9 @@ The "flare tutorial":http://flare.prefuse.org/tutorial is the best place to get 
 
 Instructions on developing with "flare in textmate":http://arrifana.org/blog/2008/03/flare-flex-sdk-and-mac-osx/.
 
-h3. Known Issues
+h3. Quirks
 
- * Edges don't display bi-directional arrows
+ * prefuse doesn't support edges with bi-directional arrows, so documents containing mutual references are represented by arrow-free edges.
 
 h3. Example
 
